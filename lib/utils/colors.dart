@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 /// Contains all colors used in app.
 class COLORS {
   static const Color primary = Color.fromRGBO(37, 37, 37, 1.0);
+  static const Color primaryText = Colors.white;
   static const Color secondary = Color.fromRGBO(59, 59, 59, 1.0);
+  static const Color secondaryText = Color.fromRGBO(146, 146, 146, 1.0);
   static const Color transparent = Colors.transparent;
 
   /// Card colors

@@ -2,12 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:notes/screens/edit/edit_note_screen.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:logger/logger.dart';
+import 'package:notes/screens/edit_or_add/edit_or_add_screen.dart';
 import 'package:notes/screens/main/main_screen.dart';
 import 'package:notes/utils/colors.dart';
+import 'package:path_provider/path_provider.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter(
+    await getApplicationDocumentsDirectory().then((value) => value.path),
+  );
+
+  Logger().i(await getApplicationDocumentsDirectory());
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -48,7 +56,7 @@ class MyApp extends StatelessWidget {
         /// All routes.
         getPages: [
           GetPage(name: '/main', page: () => MainScreen()),
-          GetPage(name: '/edit', page: () => const EditNoteScreen()),
+          GetPage(name: '/edit', page: () => EditOrAddNoteScreen()),
         ],
       ),
     );
