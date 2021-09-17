@@ -1,8 +1,16 @@
 import 'dart:convert';
 
+import 'package:hive_flutter/hive_flutter.dart';
+
+part 'note.g.dart';
+
+@HiveType(typeId: 0)
 class Note {
+  @HiveField(0)
   final String title;
+  @HiveField(1)
   final String content;
+  @HiveField(2)
   final String date;
 
   Note({
@@ -50,10 +58,7 @@ class Note {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is Note &&
-        other.title == title &&
-        other.content == content &&
-        other.date == date;
+    return other is Note && other.title == title && other.content == content && other.date == date;
   }
 
   @override

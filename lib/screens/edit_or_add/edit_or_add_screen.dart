@@ -49,17 +49,20 @@ class EditOrAddNoteScreen extends StatelessWidget {
               /// title and content not empty.
               if (controller.validateFields()) {
                 controller.saveNote();
+                Get.back();
                 Get.snackbar(
                   "Done",
-                  "Note saved successfully.",
+                  "Note ${controller.isEdit ? "updated": "saved"} successfully.",
+                  duration: const Duration(seconds: 1),
                   snackPosition: SnackPosition.BOTTOM,
-                  backgroundColor: COLORS.primary,
+                  backgroundColor: COLORS.secondary,
                   colorText: COLORS.primaryText,
                 );
               } else {
                 Get.snackbar(
                   "Error",
                   "Please enter title and content.",
+                  duration: const Duration(seconds: 1),
                   snackPosition: SnackPosition.BOTTOM,
                   backgroundColor: COLORS.secondary,
                   colorText: COLORS.primaryText,
@@ -81,7 +84,7 @@ class EditOrAddNoteScreen extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  "Save",
+                  controller.isEdit ? "Update" : "Save",
                   style: FONTS.secondary(null),
                 ),
               ),
@@ -96,6 +99,7 @@ class EditOrAddNoteScreen extends StatelessWidget {
             TextField(
               scrollPhysics: const BouncingScrollPhysics(),
               controller: controller.titleTextController,
+              maxLines: null,
               cursorColor: COLORS.secondaryText.withOpacity(0.7),
               decoration: InputDecoration(
                 border: InputBorder.none,

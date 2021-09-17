@@ -20,9 +20,24 @@ class MainScreenController extends GetxController {
 
   final database = Get.put(LocalDatabase());
 
+  /// Observable to know new note added or not.
+  final RxBool _isDatabaseChanged = false.obs;
+
+  // @override
+  // void onInit() async {
+  //   super.onInit();
+  //   await database.initDB();
+  // }
+
   void printData(message) {
     Logger().d(message);
   }
+
+  bool isNewNoteAdded() => _isDatabaseChanged.isTrue;
+
+  void resetNewNoteAdded() => _isDatabaseChanged.value = false;
+
+  void setDatabaseChanged() => _isDatabaseChanged.value = true;
 
   Future getNotes() async {
     await database.initDB();

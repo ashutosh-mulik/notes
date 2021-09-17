@@ -2,21 +2,27 @@ import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
+import 'package:notes/services/models/note.dart';
 import 'package:notes/utils/fonts.dart';
+import 'package:notes/utils/other.dart';
 
 class CustomCard extends StatelessWidget {
   final Color cardColor;
-  final String title;
+  final int index;
+  final Note note;
   const CustomCard({
     Key? key,
     required this.cardColor,
-    required this.title,
+    required this.index,
+    required this.note,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Logger().i(note.toString());
     return GestureDetector(
-      onTap: () => Get.toNamed('/edit'),
+      onTap: () => Get.toNamed('/view', arguments: [index, note]),
       child: Container(
         decoration: BoxDecoration(
           color: cardColor,
@@ -33,7 +39,7 @@ class CustomCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  title,
+                  getTitleForCard(note.title),
                   style: FONTS.secondary(
                     TextStyle(
                       fontSize: 17.sp,
@@ -42,7 +48,7 @@ class CustomCard extends StatelessWidget {
                 ),
               ),
               Text(
-                "May 21, 2020",
+                getCustomFormatDate(note.date),
                 style: FONTS.secondary(
                   TextStyle(
                     fontSize: 13.sp,

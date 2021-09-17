@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:notes/controllers/main_screen_controller.dart';
+import 'package:notes/services/models/note.dart';
 import 'package:notes/utils/colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:notes/utils/fonts.dart';
@@ -12,6 +13,7 @@ import 'package:notes/widgets/card.dart';
 
 class MainScreen extends StatelessWidget {
   final controller = Get.put(MainScreenController());
+
   MainScreen({Key? key}) : super(key: key);
 
   @override
@@ -24,14 +26,12 @@ class MainScreen extends StatelessWidget {
         elevation: 0,
         backgroundColor: COLORS.transparent,
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
                 COLORS.primary,
-                COLORS.primary.withOpacity(0.9),
-                COLORS.primary.withOpacity(0.7),
                 COLORS.transparent,
               ],
             ),
@@ -45,7 +45,7 @@ class MainScreen extends StatelessWidget {
         ),
         actions: [
           BouncingWidget(
-            onPressed: () {},
+            onPressed: () => Get.toNamed('/settings'),
             duration: const Duration(milliseconds: 100),
             scaleFactor: 1.5,
             child: Container(
@@ -60,28 +60,7 @@ class MainScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.r),
               ),
               child: Icon(
-                Icons.search,
-                size: 20.h,
-              ),
-            ),
-          ),
-          BouncingWidget(
-            onPressed: () {},
-            duration: const Duration(milliseconds: 100),
-            scaleFactor: 1.5,
-            child: Container(
-              width: 43.w,
-              margin: EdgeInsets.only(
-                top: 20.h,
-                right: 10.w,
-                bottom: 20.h,
-              ),
-              decoration: BoxDecoration(
-                color: COLORS.secondary,
-                borderRadius: BorderRadius.circular(10.r),
-              ),
-              child: Icon(
-                Icons.settings,
+                Icons.settings_outlined,
                 size: 20.h,
               ),
             ),
@@ -98,31 +77,49 @@ class MainScreen extends StatelessWidget {
           left: 10.h,
           right: 10.h,
         ),
-        child: FutureBuilder(
-          future: controller.getNotes(),
-          builder: (context, data) {
-            if (data.hasData && data.data is Map) {
-              var notes = data.data as Map;
-              var n = notes.entries;
-              return StaggeredGridView.countBuilder(
-                crossAxisCount: 4,
-                itemCount: notes.length,
-                itemBuilder: (BuildContext context, int index) => CustomCard(
-                  cardColor: controller.getColor(),
-                  title: n.elementAt(index).value.title,
-                ),
-                staggeredTileBuilder: (int index) => StaggeredTile.count(
-                  2,
-                  index.isEven ? 3 : 2,
-                ),
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-              );
-            }
-            return CircularProgressIndicator();
-          },
-        ),
+        child: Obx(() {
+          /// refresh card list if new item is added.
+          if (controller.isNewNoteAdded()) {
+            controller.resetNewNoteAdded();
+            return _buildCardList();
+          }
+
+          /// first build
+          return _buildCardList();
+        }),
       ),
+    );
+  }
+
+  /// Get data from storage and build list.
+  _buildCardList() {
+    return FutureBuilder(
+      future: controller.getNotes(),
+      builder: (context, data) {
+        if (data.hasData && data.data is Iterable) {
+          var notes = data.data as Iterable;
+          var rNotes = notes.toList().reversed;
+          return StaggeredGridView.countBuilder(
+            crossAxisCount: 4,
+            itemCount: rNotes.length,
+            itemBuilder: (BuildContext context, int index) {
+              Note note = rNotes.elementAt(index);
+              return CustomCard(cardColor: controller.getColor(), index: (rNotes.length - index) - 1, note: note);
+            },
+            staggeredTileBuilder: (int index) => StaggeredTile.count(
+              2,
+              rNotes.elementAt(index).title.length > 70
+                  ? 3
+                  : rNotes.elementAt(index).title.length > 10
+                      ? 2
+                      : 1,
+            ),
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
+          );
+        }
+        return const CircularProgressIndicator();
+      },
     );
   }
 }
