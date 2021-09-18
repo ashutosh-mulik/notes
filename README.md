@@ -2,6 +2,13 @@
 
 A free, open-source note-taking application built with flutter.
 
+## 2. Screenshots
+|||
+|:-:|:-|
+|<img width="400" height="850" src="https://raw.githubusercontent.com/ashutosh-mulik/notes/master/01.jpg">|<img width="400" height="850" src="https://raw.githubusercontent.com/ashutosh-mulik/notes/master/02.jpg">|
+|<img width="400" height="850" src="https://raw.githubusercontent.com/ashutosh-mulik/notes/master/03.jpg">|<img width="400" height="850" src="https://raw.githubusercontent.com/ashutosh-mulik/notes/master/04.jpg">|
+|<img width="400" height="850" src="https://raw.githubusercontent.com/ashutosh-mulik/notes/master/01.jpg">|
+
 ## 2. Features
 |No.|Functions|
 |:-:|:-|
