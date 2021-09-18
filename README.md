@@ -7,13 +7,13 @@ A free, open-source note-taking application built with flutter.
 |:-:|:-|
 |1|Basic **CREATE, UPDATE, DELETE** options  |
 
-## 3. TODO
+## 3. Todo
 |No.|Functions|
 |:-:|:-|
 |1|**Cloud Backup**|
 |2|**DAY-NIGHT MODE**|
 
-## 3 LICENSE
+## 4. License
 ```
                      GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
