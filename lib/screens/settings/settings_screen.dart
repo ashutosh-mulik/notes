@@ -6,6 +6,7 @@ import 'package:notes/controllers/settings_controller.dart';
 import 'package:notes/utils/colors.dart';
 import 'package:notes/utils/fonts.dart';
 import 'package:share/share.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatelessWidget {
   final controller = Get.put(SettingsController());
@@ -139,6 +140,7 @@ class SettingsScreen extends StatelessWidget {
                 Card(
                   color: COLORS.secondary,
                   child: ListTile(
+                    onTap: () async => await launch("https://github.com/ashutosh-mulik/notes/blob/master/README.md"),
                     leading: const Icon(
                       Icons.article_outlined,
                       color: COLORS.primaryIcon,
@@ -156,6 +158,7 @@ class SettingsScreen extends StatelessWidget {
                 Card(
                   color: COLORS.secondary,
                   child: ListTile(
+                    onTap: () async => await launch("https://github.com/ashutosh-mulik/notes/blob/master/CHANGE_LOG.md"),
                     leading: const Icon(
                       Icons.published_with_changes_outlined,
                       color: COLORS.primaryIcon,
@@ -173,6 +176,7 @@ class SettingsScreen extends StatelessWidget {
                 Card(
                   color: COLORS.secondary,
                   child: ListTile(
+                    onTap: () async => await launch("https://github.com/ashutosh-mulik/notes/blob/master/LICENSE"),
                     leading: const Icon(
                       Icons.security_outlined,
                       color: COLORS.primaryIcon,
