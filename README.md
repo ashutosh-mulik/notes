@@ -13,7 +13,12 @@ A free, open-source note-taking application built with flutter.
 |1|**Cloud Backup**|
 |2|**DAY-NIGHT MODE**|
 
-## 4. License
+## 4. Credits
+1. UI design by <a href="https://dribbble.com/shots/11875872-A-simple-and-lightweight-note-app">Amal</a>.
+2. Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+
+
+## 5. License
 ```
                      GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
